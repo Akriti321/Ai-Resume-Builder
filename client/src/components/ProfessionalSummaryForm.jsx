@@ -1,26 +1,7 @@
 import { Sparkles } from 'lucide-react'
-import React, { useContext, useState } from 'react'
-import { AppContext } from '../context/AppContext'
+import React from 'react'
 
 const ProfessionalSummary = ({data, onChange, setResumeData}) => {
-  const { enhanceSummary } = useContext(AppContext)
-  const [loading, setLoading] = useState(false)
-
-  const handleEnhance = async () => {
-    if (!data) {
-        alert("Please write a summary first so AI can enhance it!")
-        return
-    }
-    setLoading(true)
-    const result = await enhanceSummary(data)
-    if (result.success) {
-        onChange(result.enhancedContent)
-    } else {
-        alert(result.message || "Failed to enhance summary")
-    }
-    setLoading(false)
-  }
-
   return (
     <div className='space-y-4'>
         <div className='flex items-center justify-between'>
@@ -28,13 +9,9 @@ const ProfessionalSummary = ({data, onChange, setResumeData}) => {
                 <h3 className='flex items-center gap-2 text-lg font-semibold text-gray-900'>Professional Summary</h3>
                 <p className='text-sm text-gray-500'>Add summary for your resume here</p>
             </div>
-            <button 
-                onClick={handleEnhance}
-                disabled={loading}
-                className='flex items-center gap-2 px-3 py-1 text-sm bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors disabled:opacity-50 cursor-pointer'
-            >
-                <Sparkles className={`size-4 ${loading && 'animate-spin'}`}/>
-                {loading ? 'Enhancing...' : 'AI Enhance'}
+            <button className='flex items-center gap-2 px-3 py-1 text-sm bg-purple-100 text-purple-700  rounded hover:bg-purple-200 transition-colors disabled:opacity-50'>
+                <Sparkles className='size-4'/>
+                AI Enhance
             </button>
         </div>
         <div className='mt-6'>

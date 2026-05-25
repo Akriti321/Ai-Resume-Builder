@@ -216,54 +216,6 @@ export const AppContextProvider = ({ children }) => {
         }
     };
 
-    // Enhance professional summary with AI
-    const enhanceSummary = async (userContent) => {
-        try {
-            const response = await fetch(`${backendUrl}/api/ai/enhance-pro-sum`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': token
-                },
-                body: JSON.stringify({ userContent })
-            });
-            const data = await response.json();
-            if (response.ok) {
-                return { success: true, enhancedContent: data.enhancedContent };
-            } else {
-                console.error("AI Summary Enhance Error:", data.message);
-                return { success: false, message: data.message };
-            }
-        } catch (error) {
-            console.error("AI Summary Enhance Network Error:", error);
-            return { success: false, message: "Network error" };
-        }
-    };
-
-    // Enhance job description with AI
-    const enhanceJobDesc = async (userContent) => {
-        try {
-            const response = await fetch(`${backendUrl}/api/ai/enhance-job-desc`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': token
-                },
-                body: JSON.stringify({ userContent })
-            });
-            const data = await response.json();
-            if (response.ok) {
-                return { success: true, enhancedContent: data.enhancedContent };
-            } else {
-                console.error("AI Job Description Enhance Error:", data.message);
-                return { success: false, message: data.message };
-            }
-        } catch (error) {
-            console.error("AI Job Description Enhance Network Error:", error);
-            return { success: false, message: "Network error" };
-        }
-    };
-
     // Logout
     const logout = () => {
         setToken('');
@@ -293,9 +245,7 @@ export const AppContextProvider = ({ children }) => {
             createNewResume,
             deleteUserResume,
             fetchSingleResume,
-            saveResume,
-            enhanceSummary,
-            enhanceJobDesc
+            saveResume
         }}>
             {children}
         </AppContext.Provider>
