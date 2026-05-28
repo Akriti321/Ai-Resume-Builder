@@ -1,7 +1,25 @@
 import { Briefcase, Plus, Sparkles, Trash, Trash2 } from 'lucide-react'
-import React from 'react'
+import React, { useContext, useState } from 'react'
+import { AppContext } from '../context/AppContext'
 
 const ExperienceForm = ({ data = [], onChange }) => {
+    const { enhanceJobDesc } = useContext(AppContext)
+    const [enhancingIndex, setEnhancingIndex] = useState(null)
+
+    const handleEnhance = async (index, currentText) => {
+        if (!currentText) {
+            alert("Please write a job description first so AI can enhance it!")
+            return
+        }
+        setEnhancingIndex(index)
+        const result = await enhanceJobDesc(currentText)
+        if (result.success) {
+            updateExperience(index, "description", result.enhancedContent)
+        } else {
+            alert(result.message || "Failed to enhance job description")
+        }
+        setEnhancingIndex(null)
+    }
 
     const addExperience = () => {
         const newExperience = {
@@ -79,12 +97,16 @@ const ExperienceForm = ({ data = [], onChange }) => {
                                 <input type="checkbox" checked={experience.is_current || false} onChange={(e)=> updateExperience(index, "is_current", e.target.checked)} className='rounded border-gray-300 text-blue-600 accent-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer' />
                                 <span className='text-sm text-gray-700 font-medium'>I currently work here</span>
                             </label>
-                            <div className='space-y-2'>
+                             <div className='space-y-2'>
                                 <div className='flex items-center justify-between'>
                                     <label className='text-sm font-medium text-gray-700'>Job Description</label>
-                                    <button className='flex items-center gap-1 px-2.5 py-1 text-xs bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors font-medium'>
-                                        <Sparkles className='w-3 h-3' />
-                                        Enhance with AI
+                                    <button 
+                                        onClick={() => handleEnhance(index, experience.description)}
+                                        disabled={enhancingIndex !== null}
+                                        className='flex items-center gap-1 px-2.5 py-1 text-xs bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors font-medium cursor-pointer disabled:opacity-50'
+                                    >
+                                        <Sparkles className={`w-3 h-3 ${enhancingIndex === index && 'animate-spin'}`} />
+                                        {enhancingIndex === index ? 'Enhancing...' : 'Enhance with AI'}
                                     </button>
                                 </div>
                                 <textarea rows={4} value={experience.description || ""} onChange={(e)=> updateExperience(index, "description", e.target.value)} className='w-full py-2 px-3 text-sm  rounded-lg resize-none ' placeholder='Describe your key responsibilities, achievements, and impact at this position...' />

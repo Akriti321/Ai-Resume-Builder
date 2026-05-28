@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 export const AppContext = createContext();
 
 export const AppContextProvider = ({ children }) => {
-    const backendUrl = "http://localhost:5000";
+    const backendUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
     const [token, setToken] = useState(localStorage.getItem('token') || '');
     const [user, setUser] = useState(null);
     const [resumes, setResumes] = useState([]);
@@ -192,9 +192,29 @@ export const AppContextProvider = ({ children }) => {
             delete cleanResumeData.updatedAt;
             delete cleanResumeData.__v;
 
+            // Handle local profile image upload file if it's a File/Blob object
+            let imageFile = null;
+            if (cleanResumeData.personal_info) {
+                // Clone personal_info to prevent modifying direct component state
+                cleanResumeData.personal_info = { ...cleanResumeData.personal_info };
+                
+                if (cleanResumeData.personal_info.image) {
+                    if (cleanResumeData.personal_info.image instanceof File || cleanResumeData.personal_info.image instanceof Blob) {
+                        imageFile = cleanResumeData.personal_info.image;
+                        delete cleanResumeData.personal_info.image;
+                    } else if (typeof cleanResumeData.personal_info.image === 'object') {
+                        // If it's a plain empty object {} or similar, reset to blank string
+                        cleanResumeData.personal_info.image = "";
+                    }
+                }
+            }
+
             const formData = new FormData();
             formData.append("resumeId", resumeId);
             formData.append("resumeData", JSON.stringify(cleanResumeData));
+            if (imageFile) {
+                formData.append("image", imageFile);
+            }
 
             const response = await fetch(`${backendUrl}/api/resumes/update`, {
                 method: 'PUT',
@@ -212,6 +232,78 @@ export const AppContextProvider = ({ children }) => {
             }
         } catch (error) {
             console.error("Error saving resume:", error);
+            return { success: false, message: "Network error" };
+        }
+    };
+
+    // Enhance professional summary with AI
+    const enhanceSummary = async (userContent) => {
+        try {
+            const response = await fetch(`${backendUrl}/api/ai/enhance-pro-sum`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': token
+                },
+                body: JSON.stringify({ userContent })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                return { success: true, enhancedContent: data.enhancedContent };
+            } else {
+                console.error("AI Summary Enhance Error:", data.message);
+                return { success: false, message: data.message };
+            }
+        } catch (error) {
+            console.error("AI Summary Enhance Network Error:", error);
+            return { success: false, message: "Network error" };
+        }
+    };
+
+    // Enhance job description with AI
+    const enhanceJobDesc = async (userContent) => {
+        try {
+            const response = await fetch(`${backendUrl}/api/ai/enhance-job-desc`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': token
+                },
+                body: JSON.stringify({ userContent })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                return { success: true, enhancedContent: data.enhancedContent };
+            } else {
+                console.error("AI Job Description Enhance Error:", data.message);
+                return { success: false, message: data.message };
+            }
+        } catch (error) {
+            console.error("AI Job Description Enhance Network Error:", error);
+            return { success: false, message: "Network error" };
+        }
+    };
+
+    // Enhance project description with AI
+    const enhanceProjectDesc = async (userContent) => {
+        try {
+            const response = await fetch(`${backendUrl}/api/ai/enhance-project-desc`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': token
+                },
+                body: JSON.stringify({ userContent })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                return { success: true, enhancedContent: data.enhancedContent };
+            } else {
+                console.error("AI Project Description Enhance Error:", data.message);
+                return { success: false, message: data.message };
+            }
+        } catch (error) {
+            console.error("AI Project Description Enhance Network Error:", error);
             return { success: false, message: "Network error" };
         }
     };
@@ -245,7 +337,10 @@ export const AppContextProvider = ({ children }) => {
             createNewResume,
             deleteUserResume,
             fetchSingleResume,
-            saveResume
+            saveResume,
+            enhanceSummary,
+            enhanceJobDesc,
+            enhanceProjectDesc
         }}>
             {children}
         </AppContext.Provider>

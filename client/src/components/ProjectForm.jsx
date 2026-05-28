@@ -1,7 +1,25 @@
 import { FolderGit2, Plus, Sparkles, Trash, Trash2 } from 'lucide-react'
-import React from 'react'
+import React, { useContext, useState } from 'react'
+import { AppContext } from '../context/AppContext'
 
 const ProjectForm = ({ data = [], onChange }) => {
+    const { enhanceProjectDesc } = useContext(AppContext)
+    const [enhancingIndex, setEnhancingIndex] = useState(null)
+
+    const handleEnhance = async (index, currentText) => {
+        if (!currentText) {
+            alert("Please write a project description first so AI can enhance it!")
+            return
+        }
+        setEnhancingIndex(index)
+        const result = await enhanceProjectDesc(currentText)
+        if (result.success) {
+            updateProject(index, "description", result.enhancedContent)
+        } else {
+            alert(result.message || "Failed to enhance project description")
+        }
+        setEnhancingIndex(null)
+    }
 
     const addProject = () => {
         const newProject = {
@@ -68,9 +86,14 @@ const ProjectForm = ({ data = [], onChange }) => {
                             <div className='space-y-2'>
                                 <div className='flex items-center justify-between'>
                                     <label className='text-sm font-medium text-gray-700'>Project Description</label>
-                                    <button className='flex items-center gap-1 px-2.5 py-1 text-xs bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors font-medium'>
-                                        <Sparkles className='w-3 h-3' />
-                                        Enhance with AI
+                                    <button 
+                                        type="button"
+                                        onClick={() => handleEnhance(index, project.description)}
+                                        disabled={enhancingIndex !== null}
+                                        className='flex items-center gap-1 px-2.5 py-1 text-xs bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors font-medium cursor-pointer disabled:opacity-50'
+                                    >
+                                        <Sparkles className={`w-3 h-3 ${enhancingIndex === index && 'animate-spin'}`} />
+                                        {enhancingIndex === index ? 'Enhancing...' : 'Enhance with AI'}
                                     </button>
                                 </div>
                                 <textarea value={project.description || ""} onChange={(e)=> updateProject(index, "description", e.target.value)} rows={4} className='w-full p-3 px-4 border text-sm border-gray-300 rounded-lg focus:ring focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors resize-none bg-white' placeholder='Describe the goal, your individual role, and achievements in this project...' />

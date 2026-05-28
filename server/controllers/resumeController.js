@@ -147,6 +147,34 @@ export const updateResume = async (req, res) => {
     const resumeData =
       JSON.parse(req.body.resumeData)
 
+    // Handle profile image upload if present
+    if (req.file) {
+      const fileBuffer = fs.readFileSync(req.file.path);
+      const uploadResponse = await imageKit.files.upload({
+        file: fileBuffer.toString("base64"),
+        fileName: req.file.originalname || `image-${Date.now()}`
+      });
+
+      if (!resumeData.personal_info) {
+        resumeData.personal_info = {};
+      }
+      resumeData.personal_info.image = uploadResponse.url;
+
+      // Clean up the temp file
+      try {
+        fs.unlinkSync(req.file.path);
+      } catch (err) {
+        console.error("Error deleting temp file:", err);
+      }
+    }
+
+    // Ensure personal_info.image is not an object (e.g. {}) to prevent Mongoose casting errors
+    if (resumeData.personal_info) {
+      if (typeof resumeData.personal_info.image === 'object') {
+        resumeData.personal_info.image = "";
+      }
+    }
+
     const updatedResume =
       await Resume.findByIdAndUpdate(
 

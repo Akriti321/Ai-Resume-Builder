@@ -4,6 +4,7 @@ import protect from "../middlewares/authMiddleware.js";
 import {
   enhanceJobDescription,
   enhanceProfessionalSummary,
+  enhanceProjectDescription,
   uploadResume
 } from "../controllers/aiController.js";
 
@@ -21,6 +22,12 @@ aiRouter.post(
   "/enhance-job-desc",
   protect,
   enhanceJobDescription
+);
+
+aiRouter.post(
+  "/enhance-project-desc",
+  protect,
+  enhanceProjectDescription
 );
 
 aiRouter.post(

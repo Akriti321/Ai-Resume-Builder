@@ -1,4 +1,4 @@
-import { Lock, Mail, User2Icon } from 'lucide-react'
+import { Lock, Mail, User2Icon, Eye, EyeOff } from 'lucide-react'
 import React, { useContext, useState } from 'react'
 import { AppContext } from '../context/AppContext'
 
@@ -8,6 +8,7 @@ const Login = () => {
     const [state, setState] = useState(urlState || "login")
     const { loginUser, registerUser } = useContext(AppContext)
     const [errorMsg, setErrorMsg] = useState('')
+    const [showPassword, setShowPassword] = useState(false)
 
     const [formData, setFormData] = useState({
         name: '',
@@ -48,11 +49,14 @@ const Login = () => {
                 )}
                 <div className={`flex items-center w-full ${state === "login" ? "mt-6" : "mt-4"} bg-white border border-gray-300/80 h-12 rounded-full overflow-hidden px-5 gap-2 focus-within:border-green-500 focus-within:ring-1 focus-within:ring-green-500 transition-all`}>
                     <Mail size={16} color='#6B7280'/>
-                    <input type="email" name="email" placeholder="Email id" className="border-none outline-none ring-0 flex-1 bg-transparent" value={formData.email} onChange={handleChange} required />
+                    <input type="email" name="email" placeholder="Email id" autoComplete="off" className="border-none outline-none ring-0 flex-1 bg-transparent" value={formData.email} onChange={handleChange} required />
                 </div>
                 <div className="flex items-center mt-4 w-full bg-white border border-gray-300/80 h-12 rounded-full overflow-hidden px-5 gap-2 focus-within:border-green-500 focus-within:ring-1 focus-within:ring-green-500 transition-all">
-                    <Lock size={16} color='#6B7280'/>
-                    <input type="password" name="password" placeholder="Password" className="border-none outline-none ring-0 flex-1 bg-transparent" value={formData.password} onChange={handleChange} required />
+                    <Lock className="size-4 text-slate-500 shrink-0" />
+                    <input type={showPassword ? "text" : "password"} name="password" placeholder="Password" autoComplete="new-password" className="border-none outline-none ring-0 flex-1 bg-transparent" value={formData.password} onChange={handleChange} required />
+                    <button type="button" onClick={() => setShowPassword(prev => !prev)} className="text-gray-400 hover:text-gray-600 focus:outline-none transition-colors mr-5 cursor-pointer flex items-center justify-center">
+                        {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </button>
                 </div>
                 <div className="mt-4 text-left text-green-500">
                     <button className="text-sm hover:underline" type="button">Forgot password?</button>
