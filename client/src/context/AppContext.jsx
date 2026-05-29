@@ -181,6 +181,25 @@ export const AppContextProvider = ({ children }) => {
         }
     };
 
+    // Fetch public resume
+    const fetchPublicResume = async (resumeId) => {
+        try {
+            const response = await fetch(`${backendUrl}/api/resumes/public/${resumeId}`, {
+                method: 'GET'
+            });
+            const data = await response.json();
+            if (response.ok) {
+                return { success: true, resume: data.resume };
+            } else {
+                console.error("Fetch Public Resume API Error:", data.message);
+                return { success: false, message: data.message };
+            }
+        } catch (error) {
+            console.error("Error fetching public resume:", error);
+            return { success: false, message: "Network error" };
+        }
+    };
+
     // Save resume
     const saveResume = async (resumeId, resumeData) => {
         try {
@@ -337,6 +356,7 @@ export const AppContextProvider = ({ children }) => {
             createNewResume,
             deleteUserResume,
             fetchSingleResume,
+            fetchPublicResume,
             saveResume,
             enhanceSummary,
             enhanceJobDesc,

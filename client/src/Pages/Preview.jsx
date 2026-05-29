@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom'
-import { dummyResumeData } from '../assets/assets'
+import { AppContext } from '../context/AppContext'
 import ResumePreview from '../components/ResumePreview'
 import { ArrowLeftIcon, Loader } from 'lucide-react'
 
@@ -8,17 +8,23 @@ const Preview = () => {
     const [resumeData, setResumeData] = useState(null)
     const { resumeId } = useParams()
     const [isLoading, setIsLoading] = useState(true)
+    const { fetchPublicResume } = useContext(AppContext)
 
     const loadResumeData = async () => {
-        const foundResume = dummyResumeData.find(resume => resume._id === resumeId)
-        if (foundResume) {
-            setResumeData(foundResume)
+        setIsLoading(true)
+        const result = await fetchPublicResume(resumeId)
+        if (result.success) {
+            setResumeData(result.resume)
+        } else {
+            setResumeData(null)
         }
         setIsLoading(false)
     }
 
     useEffect(() => {
-        loadResumeData()
+        if (resumeId) {
+            loadResumeData()
+        }
     }, [resumeId])
 
     return resumeData ? (
