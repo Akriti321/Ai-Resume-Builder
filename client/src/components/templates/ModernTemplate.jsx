@@ -13,12 +13,12 @@ const ModernTemplate = ({ data, accentColor }) => {
 	return (
 		<div className="max-w-4xl mx-auto bg-white text-gray-800">
 			{/* Header */}
-			<header className="p-8 text-white" style={{ backgroundColor: accentColor }}>
+			<header className="p-4 text-white" style={{ backgroundColor: accentColor }}>
 				<h1 className="text-4xl font-light mb-3">
 					{data.personal_info?.full_name || "Your Name"}
 				</h1>
 
-				<div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm ">
+				<div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
 					{data.personal_info?.email && (
 						<div className="flex items-center gap-2">
 							<Mail className="size-4" />
@@ -52,11 +52,11 @@ const ModernTemplate = ({ data, accentColor }) => {
 				</div>
 			</header>
 
-			<div className="p-8">
+			<div className="p-4">
 				{/* Professional Summary */}
 				{data.professional_summary && (
-					<section className="mb-8">
-						<h2 className="text-2xl font-light mb-4 pb-2 border-b border-gray-200">
+					<section className="mb-4">
+						<h2 className="text-2xl font-light mb-3 pb-1 border-b border-gray-200">
 							Professional Summary
 						</h2>
 						<p className="text-gray-700 ">{data.professional_summary}</p>
@@ -65,16 +65,16 @@ const ModernTemplate = ({ data, accentColor }) => {
 
 				{/* Experience */}
 				{data.experience && data.experience.length > 0 && (
-					<section className="mb-8">
-						<h2 className="text-2xl font-light mb-6 pb-2 border-b border-gray-200">
+					<section className="mb-4">
+						<h2 className="text-2xl font-light mb-3 pb-1 border-b border-gray-200">
 							Experience
 						</h2>
 
-						<div className="space-y-6">
+						<div className="space-y-4">
 							{data.experience.map((exp, index) => (
 								<div key={index} className="relative pl-6 border-l border-gray-200">
 
-									<div className="flex justify-between items-start mb-2">
+									<div className="flex justify-between items-start mb-1">
 										<div>
 											<h3 className="text-xl font-medium text-gray-900">{exp.position}</h3>
 											<p className="font-medium" style={{ color: accentColor }}>{exp.company}</p>
@@ -84,7 +84,7 @@ const ModernTemplate = ({ data, accentColor }) => {
 										</div>
 									</div>
 									{exp.description && (
-										<div className="text-gray-700 leading-relaxed mt-3 whitespace-pre-line">
+										<div className="text-gray-700 leading-relaxed mt-2 whitespace-pre-line">
 											{exp.description}
 										</div>
 									)}
@@ -96,12 +96,12 @@ const ModernTemplate = ({ data, accentColor }) => {
 
 				{/* Projects */}
 				{data.project && data.project.length > 0 && (
-					<section className="mb-8">
-						<h2 className="text-2xl font-light mb-4 pb-2 border-b border-gray-200">
+					<section className="mb-4">
+						<h2 className="text-2xl font-light mb-3 pb-1 border-b border-gray-200">
 							Projects
 						</h2>
 
-						<div className="space-y-6">
+						<div className="space-y-4">
 							{data.project.map((p, index) => (
 								<div key={index} className="relative pl-6 border-l border-gray-200" style={{borderLeftColor: accentColor}}>
 
@@ -122,7 +122,7 @@ const ModernTemplate = ({ data, accentColor }) => {
 					</section>
 				)}
 
-				<div className="grid sm:grid-cols-2 gap-8">
+				<div className="grid sm:grid-cols-2 gap-4">
 					{/* Education */}
 					{data.education && data.education.length > 0 && (
 						<section>
@@ -130,7 +130,7 @@ const ModernTemplate = ({ data, accentColor }) => {
 								Education
 							</h2>
 
-							<div className="space-y-4">
+							<div className="space-y-3">
 								{data.education.map((edu, index) => (
 									<div key={index}>
 										<h3 className="font-semibold text-gray-900">
@@ -150,7 +150,7 @@ const ModernTemplate = ({ data, accentColor }) => {
 					{/* Skills */}
 					{data.skills && data.skills.length > 0 && (
 						<section>
-							<h2 className="text-2xl font-light mb-4 pb-2 border-b border-gray-200">
+							<h2 className="text-2xl font-light mb-3 pb-1 border-b border-gray-200">
 								Skills
 							</h2>
 
