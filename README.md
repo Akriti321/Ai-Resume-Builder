@@ -1,4 +1,4 @@
-# AI Resume Builder : Create ATS-Friendly Resumes with AI 🚀
+#🚀 Build Resumes, Analyze Jobs & Prepare for Interviews with AI
 
 ### Introduction
 
@@ -36,6 +36,8 @@ Users can:
 * Use Gemini AI to enhance descriptions, projects, skills, and achievements.
 * Preview changes in real time.
 * Download resumes as high-quality PDFs anytime.
+* JD and Resume Match Score
+* Possible Interview Questions Related to Projects
 
 The platform enables users to focus on their achievements while AI helps present them professionally.
 
@@ -75,13 +77,29 @@ Powered by Gemini API:
 * Generates Professional Wording
 * Creates ATS-Friendly Content
 * Suggests Better Achievement Statements
+* 
+### 🎯 Role Compatibility & Career Readiness
 
+* Role Compatibility Score
+* Skill Gap Analysis
+* Missing Skills Identification
+* Career Readiness Assessment
+* Personalized Improvement Areas
+* Actionable Next Steps
+  
 ### 📄 Resume Export
 
 * Download Resume as PDF
 * Unlimited Downloads
 * Access Resume Anytime
+* Sharable Resume Links
 * Easy Resume Updates
+  
+### 🎤 AI-Powered Interview Preparation
+
+* Resume-Based Interview Questions
+* Job Description Based Interview Questions
+* Technical Question Generation
 
 ### ☁️ Cloud Storage
 
@@ -161,7 +179,7 @@ Download PDF
 
 ---
 
-# Wow Factors 🌟
+# Key Highlights 🌟
 
 ### AI-Powered Resume Writing
 
@@ -195,7 +213,7 @@ Simple interface designed for students, freshers, and professionals alike.
 
 ```bash
 # Clone Repository
-git clone <repository-url>
+git clone https://github.com/Akriti321/Ai-Resume-Builder.git
 
 # Frontend Setup
 cd client
