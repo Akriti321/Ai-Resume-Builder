@@ -1,9 +1,6 @@
-import React,
-{
-  useContext,
-  useState
-}
-from "react";
+import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import { ArrowLeftIcon } from "lucide-react";
 
 import {
   AppContext
@@ -90,6 +87,12 @@ if (response.ok) {
   return (
 
     <div className="max-w-5xl mx-auto p-6">
+
+      <div className='mb-6'>
+        <Link to={'/app'} className='inline-flex gap-2 items-center text-slate-500 hover:text-slate-700 transition-all'>
+            <ArrowLeftIcon className='size-4' /> Back to Dashboard
+        </Link>
+      </div>
 
       <h1 className="text-3xl font-bold mb-6">
         Resume JD Analyzer
