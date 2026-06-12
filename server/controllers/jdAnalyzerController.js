@@ -1,12 +1,7 @@
 import Resume from "../models/Resume.js";
-import { normalizeSkills }
-  from "../utils/normalizeSkills.js";
-import { calculateATSScore }
-from "../utils/calculateATSScore.js";
-import {
-  analyzeResumeAgainstJD
-}
-from "../services/jdAnalysisService.js";
+import { extractSkills } from "../utils/skillMatcher.js";
+import { calculateATSScore } from "../utils/calculateATSScore.js";
+import { analyzeResumeAgainstJD } from "../services/jdAnalysisService.js";
 
 const convertResumeToText = (resume) => {
 
@@ -88,45 +83,25 @@ export const analyzeJD = async (
     const resumeText =
       convertResumeToText(resume);
 
-    const normalizedResume =
-      normalizeSkills(resumeText);
+    // Deterministic skill matching
+    const resumeSkills = extractSkills(resumeText);
+    const jdSkills = extractSkills(jobDescription);
 
-    const normalizedJD =
-      normalizeSkills(jobDescription);
+    const matchedSkills = jdSkills.filter(skill => resumeSkills.includes(skill));
+    const missingSkills = jdSkills.filter(skill => !resumeSkills.includes(skill));
+    const score = calculateATSScore(matchedSkills, missingSkills);
 
     const analysis =
       await analyzeResumeAgainstJD(
-        normalizedResume,
-        normalizedJD
+        resumeText,
+        jobDescription,
+        matchedSkills,
+        missingSkills
       );
 
-    // ==========================
-    // Deterministic ATS Score
-    // ==========================
-
-    const matchedSkills =
-      analysis.matchedSkills || [];
-
-    const missingSkills =
-      analysis.missingSkills || [];
-
-    const totalSkills =
-      matchedSkills.length +
-      missingSkills.length;
-
-    let score = 0;
-
-    if (totalSkills > 0) {
-
-      score = Math.round(
-        (
-          matchedSkills.length /
-          totalSkills
-        ) * 100
-      );
-
-    }
-
+    // Override with deterministic values
+    analysis.matchedSkills = matchedSkills;
+    analysis.missingSkills = missingSkills;
     analysis.score = score;
 
     // ==========================
