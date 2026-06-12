@@ -8,8 +8,8 @@ import userRouter from "./routes/userRoutes.js";
 import resumeRouter from "./routes/resumeRoutes.js";
 import { APIResource } from "openai/core/resource.js";
 import aiRouter from "./routes/aiRoutes.js";
-
-
+import jdAnalyzerRoutes from "./routes/jdAnalyzerRoutes.js";
+import interviewRouter from "./routes/interviewRoutes.js";
 const app = express();
 
 const PORT = process.env.PORT || 3000;
@@ -25,6 +25,14 @@ app.get("/", (req, res) => {
 
 app.use("/api/users", userRouter);
 app.use("/api/resumes", resumeRouter);
+app.use(
+  "/api/jd",
+  jdAnalyzerRoutes
+);
+app.use(
+  "/api/interview",
+  interviewRouter
+);
 app.use('/api/ai',aiRouter);
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

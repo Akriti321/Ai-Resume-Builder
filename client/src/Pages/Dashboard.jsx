@@ -73,6 +73,25 @@ const Dashboard = () => {
                     <UploadCloudIcon className='size-11 transition-all duration-300 p-2.5 bg-gradient-to-br from-purple-300 to-purple-500 text-white rounded-full'/>
                     <p className='text-sm group-hover:text-purple-600 transition-all duration-300'>Upload Existing</p>
                 </button>
+                <button
+  onClick={() => navigate("/app/jd-analyzer")}
+  className="w-full bg-white sm:max-w-36 h-48 flex flex-col items-center justify-center rounded-lg gap-2 text-slate-600 border border-dashed border-slate-300 group hover:border-blue-500 hover:shadow-lg transition-all duration-300 cursor-pointer"
+>
+  <FilePenLineIcon className="size-11 p-2.5 bg-gradient-to-br from-blue-300 to-blue-500 text-white rounded-full" />
+
+  <p className="text-sm">
+    JD Analyzer
+  </p>
+</button>
+<button
+  onClick={() => navigate("/app/interview-prep")}
+  className="w-full bg-white sm:max-w-36 h-48 flex flex-col items-center justify-center rounded-lg gap-2 text-slate-600 border border-dashed border-slate-300 group hover:border-green-500 hover:shadow-lg transition-all duration-300 cursor-pointer"
+>
+  <FilePenLineIcon className="size-11 p-2.5 bg-gradient-to-br from-green-300 to-green-500 text-white rounded-full" />
+  <p className="text-sm">
+    Interview Prep
+  </p>
+</button>
             </div>
         <hr className='border-slate-300 my-6 sm:w-[305px]'/>
         <div className='grid grid-cols-2 sm:flex flex-wrap gap-4'>

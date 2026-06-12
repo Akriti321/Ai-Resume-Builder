@@ -360,9 +360,10 @@ export const AppContextProvider = ({ children }) => {
             saveResume,
             enhanceSummary,
             enhanceJobDesc,
-            enhanceProjectDesc
+            enhanceProjectDesc,
+            backendUrl,
         }}>
             {children}
         </AppContext.Provider>
-    );
+    )
 };
