@@ -12,12 +12,23 @@ const sanitizeAIContent = (text) => {
     .trim();
 };
 
+let lastWorkingModel = null;
+
 const callAIWithRetry = async (messages, retries = 3, delay = 1000) => {
+  const configuredModel = process.env.OPENAI_MODEL ? process.env.OPENAI_MODEL.replace(/['"]/g, '').trim() : 'gemini-2.5-flash';
   const models = [
-    process.env.OPENAI_MODEL ? process.env.OPENAI_MODEL.replace(/['"]/g, '').trim() : 'gemini-2.5-flash',
+    configuredModel,
     'gemini-2.0-flash',
+    'gemini-1.5-flash',
     'gemini-flash-latest'
   ];
+
+  // Prioritize the last known working model to bypass rate-limited models immediately
+  if (lastWorkingModel && models.includes(lastWorkingModel)) {
+    const idx = models.indexOf(lastWorkingModel);
+    models.splice(idx, 1);
+    models.unshift(lastWorkingModel);
+  }
 
   let lastError;
   for (const model of models) {
@@ -30,6 +41,7 @@ const callAIWithRetry = async (messages, retries = 3, delay = 1000) => {
           messages: messages,
         });
         console.log(`Successfully generated content using model: ${model}`);
+        lastWorkingModel = model; // Cache the successful model
         return response;
       } catch (error) {
         lastError = error;
