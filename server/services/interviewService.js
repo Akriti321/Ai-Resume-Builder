@@ -1,8 +1,4 @@
-import ai from "../configs/ai.js";
-
-const aiModel =
-  process.env.OPENAI_MODEL?.replace(/['"]/g, "").trim() ||
-  "gemini-2.5-flash";
+import ai, { callAIWithRetry } from "../configs/ai.js";
 
 export const generateQuestions = async (
   resumeText,
@@ -10,12 +6,8 @@ export const generateQuestions = async (
 ) => {
 
   const response =
-    await ai.chat.completions.create({
-
-      model: aiModel,
-      temperature: 0,
-
-      messages: [
+    await callAIWithRetry(
+      [
         {
           role: "system",
           content: `
@@ -62,12 +54,13 @@ ${jobDescription || "Not Provided"}
 `
         }
       ],
-
-      response_format: {
-        type: "json_object"
+      {
+        temperature: 0,
+        response_format: {
+          type: "json_object"
+        }
       }
-
-    });
+    );
 
   return JSON.parse(
     response.choices[0].message.content
