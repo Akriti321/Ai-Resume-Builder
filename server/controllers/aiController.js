@@ -1,5 +1,5 @@
 import Resume from "../models/Resume.js";
-import ai from "../configs/ai.js";
+import ai, { callAIWithRetry } from "../configs/ai.js";
 
 const aiModel = process.env.OPENAI_MODEL ? process.env.OPENAI_MODEL.replace(/['"]/g, '').trim() : 'gemini-2.5-flash';
 
@@ -12,47 +12,6 @@ const sanitizeAIContent = (text) => {
     .trim();
 };
 
-const callAIWithRetry = async (messages, retries = 3, delay = 1000) => {
-  const models = [
-    process.env.OPENAI_MODEL ? process.env.OPENAI_MODEL.replace(/['"]/g, '').trim() : 'gemini-2.5-flash',
-    'gemini-2.0-flash',
-    'gemini-flash-latest'
-  ];
-
-  let lastError;
-  for (const model of models) {
-    console.log(`Attempting completion with model: ${model}`);
-    let modelDelay = delay;
-    for (let i = 0; i < retries; i++) {
-      try {
-        const response = await ai.chat.completions.create({
-          model: model,
-          messages: messages,
-        });
-        console.log(`Successfully generated content using model: ${model}`);
-        return response;
-      } catch (error) {
-        lastError = error;
-        const status = error.status || (error.response && error.response.status);
-        
-        if (status === 429) {
-          console.warn(`Rate limit (429) hit on model ${model}. Falling back to next model immediately...`);
-          break; // Break the retry loop for this model, fall back to next model in the outer loop
-        }
-
-        const isTransient = status === 503 || status === 502 || status === 504 || status === 500;
-        if (isTransient && i < retries - 1) {
-          console.warn(`Transient error ${status || error.message} on model ${model}. Retrying in ${modelDelay}ms... (Attempt ${i + 1}/${retries})`);
-          await new Promise(resolve => setTimeout(resolve, modelDelay));
-          modelDelay *= 2; // Exponential backoff
-          continue;
-        }
-        break; // Non-transient error, try next model
-      }
-    }
-  }
-  throw lastError;
-};
 
 // Enhance Professional Summary
 export const enhanceProfessionalSummary = async (req, res) => {

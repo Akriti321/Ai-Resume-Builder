@@ -1,55 +1,44 @@
-import ai from "../configs/ai.js";
-
-const aiModel =
-  process.env.OPENAI_MODEL?.replace(/['"]/g, "").trim() ||
-  "gemini-2.5-flash";
+import ai, { callAIWithRetry } from "../configs/ai.js";
 
 export const analyzeResumeAgainstJD = async (
   resumeText,
-  jobDescription
+  jobDescription,
+  matchedSkills,
+  missingSkills
 ) => {
 
   const response =
-    await ai.chat.completions.create({
-      model: aiModel,
-      temperature: 0,
-
-      messages: [
+    await callAIWithRetry(
+      [
         {
           role: "system",
           content: `
 You are an ATS skill extraction and career guidance assistant.
 
-Compare the resume with the job description.
+We have already performed a deterministic keyword match to identify the candidate's matched and missing skills:
+- Matched Skills: ${JSON.stringify(matchedSkills)}
+- Missing Skills: ${JSON.stringify(missingSkills)}
+
+Your task is to provide career guidance, strengths, suggestions, roadmap, next steps, and readiness scores based on the resume, job description, and the pre-calculated skill lists above.
 
 Use simple language suitable for college students.
 
 Rules:
-
-- Consider abbreviations and full forms equivalent.
+- Accept the pre-calculated matchedSkills and missingSkills arrays, and return them exactly as provided in the JSON response output.
 - Do not encourage lying or keyword stuffing.
-- Only recommend skills genuinely missing.
 - Keep all insights short.
+- Suggest learning resources or priorities based on the Missing Skills.
 - Do not estimate ATS scores.
 - Do not estimate match percentages.
 - Do not generate jobFitCategory.
-
-Treat these as equivalent:
-
-DBMS = Database Management Systems
-OOP = Object Oriented Programming
-OOPS = Object Oriented Programming
-CN = Computer Networks
-OS = Operating Systems
-JS = JavaScript
 
 Return ONLY valid JSON.
 
 JSON Format:
 
 {
-  "matchedSkills": [],
-  "missingSkills": [],
+  "matchedSkills": ${JSON.stringify(matchedSkills)},
+  "missingSkills": ${JSON.stringify(missingSkills)},
   "strengths": [],
   "suggestions": [],
   "careerInsights": [],
@@ -70,7 +59,7 @@ JSON Format:
   "nextSteps": [
     {
       "skill": "",
-      "priority": "High",
+      "priority": "High|Medium|Low",
       "reason": ""
     }
   ]
@@ -78,11 +67,10 @@ JSON Format:
 
 Requirements:
 
-1. Identify matchedSkills.
-2. Identify missingSkills.
-3. Give exactly 3 strengths.
-4. Give exactly 3 suggestions.
-5. Give exactly 3 careerInsights.
+1. Use the pre-calculated matchedSkills and missingSkills.
+2. Give exactly 3 strengths based on matchedSkills and projects.
+3. Give exactly 3 suggestions.
+4. Give exactly 3 careerInsights.
 
 Career insights:
 - Under 10 words.
@@ -91,9 +79,9 @@ Career insights:
   - Need cloud experience.
   - Good project portfolio.
 
-6. Create a 4-week learning roadmap.
+5. Create a 4-week learning roadmap prioritizing the missingSkills.
 
-7. Evaluate:
+6. Evaluate:
 - overall
 - technicalSkills
 - projects
@@ -102,10 +90,10 @@ Career insights:
 
 All scores must be between 0 and 100.
 
-8. Give improvementAreas.
+7. Give improvementAreas.
 Each under 8 words.
 
-9. Give exactly 3 nextSteps.
+8. Give exactly 3 nextSteps based on missingSkills.
 
 Format:
 
@@ -135,11 +123,13 @@ ${jobDescription}
 `
         }
       ],
-
-      response_format: {
-        type: "json_object"
+      {
+        temperature: 0,
+        response_format: {
+          type: "json_object"
+        }
       }
-    });
+    );
 
   return JSON.parse(
     response.choices[0].message.content
