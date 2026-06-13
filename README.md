@@ -1,4 +1,4 @@
-#🚀 Build Resumes, Analyze Jobs & Prepare for Interviews with AI
+# 🚀 Build Resumes, Analyze Jobs & Prepare for Interviews with AI
 
 ### Introduction
 
