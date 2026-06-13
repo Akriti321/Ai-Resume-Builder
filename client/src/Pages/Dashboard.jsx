@@ -2,7 +2,7 @@ import { FilePenLineIcon, PencilIcon, PlusIcon, TrashIcon, UploadCloud, UploadCl
 import React, { useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AppContext } from '../context/AppContext'
-
+;
 const Dashboard = () => {
 
     const colors = ["#9333ea", "#d97706", "#dc2626", "#0284c7", "#16a34a"]
@@ -12,7 +12,8 @@ const Dashboard = () => {
     const [title, setTitle] = useState('')
     const [resume, setResume] = useState(null)
     const [editResumeId, setEditResumeId] = useState('')
-
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [resumeToDelete, setResumeToDelete] = useState(null);
     const navigate = useNavigate()
 
     const createResume = async (event) => {
@@ -46,14 +47,12 @@ const Dashboard = () => {
     }
 
     const deleteResume = async (resumeId) => {
-        const confirm = window.confirm('Are you sure you want to delete this resume?')
-        if (confirm) {
-            const result = await deleteUserResume(resumeId)
-            if (!result.success) {
-                alert(result.message || "Failed to delete resume")
-            }
-        }
+    const result = await deleteUserResume(resumeId)
+
+    if (!result.success) {
+        alert(result.message || "Failed to delete resume")
     }
+}
 
     useEffect(() => {
         fetchUserResumes()
@@ -105,7 +104,13 @@ const Dashboard = () => {
                             Updated on {new Date(resume.updatedAt).toLocaleDateString()}
                         </p>
                         <div onClick={e=> e.stopPropagation()} className='absolute  top-1 right-1 group-hover:flex items-center hidden'>
-                            <TrashIcon onClick={()=> deleteResume(resume._id)} className='size-7 p-1.5 hover:bg-white/50 rounded text-slate-700 transition-colors'/>
+                            <TrashIcon
+  onClick={() => {
+    setResumeToDelete(resume._id);
+    setShowDeleteModal(true);
+  }}
+  className='size-7 p-1.5 hover:bg-white/50 rounded text-slate-700 transition-colors'
+/>
                             <PencilIcon onClick={()=> {setEditResumeId(resume._id); setTitle(resume.title)}} className='size-7 p-1.5 hover:bg-white/50 rounded text-slate-700 transition-colors'/>
                         </div>
                     </button>
@@ -166,6 +171,52 @@ const Dashboard = () => {
            )}
 
         </div>
+        {showDeleteModal && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+    <div className="w-[420px] rounded-2xl bg-white p-6 shadow-2xl animate-in fade-in zoom-in-95">
+      
+      <div className="flex items-center gap-4">
+        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
+          🗑️
+        </div>
+
+        <div>
+          <h2 className="text-xl font-bold text-slate-900">
+            Delete Resume
+          </h2>
+          <p className="text-sm text-slate-500">
+            This action cannot be undone.
+          </p>
+        </div>
+      </div>
+
+      <div className="mt-5 rounded-lg bg-slate-50 p-4">
+        <p className="text-slate-700">
+          Are you sure you want to permanently delete this resume?
+        </p>
+      </div>
+
+      <div className="mt-6 flex justify-end gap-3">
+        <button
+          onClick={() => setShowDeleteModal(false)}
+          className="rounded-lg border border-slate-300 px-5 py-2.5 font-medium text-slate-700 hover:bg-slate-100"
+        >
+          Cancel
+        </button>
+
+        <button
+          onClick={() => {
+            deleteResume(resumeToDelete);
+            setShowDeleteModal(false);
+          }}
+          className="rounded-lg bg-red-500 px-5 py-2.5 font-medium text-white hover:bg-red-600"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+)}
     </div>
   )
 }
