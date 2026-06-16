@@ -131,7 +131,7 @@ const ExecutiveTemplate = ({ data, accentColor }) => {
 											{p.name}
 										</h3>
 									</div>
-									<div className="flex items-center gap-4 mb-3">
+									<div className="flex items-center gap-4 mb-3 font-semibold">
 										{p.github_link && (
 											<a
 												href={p.github_link}

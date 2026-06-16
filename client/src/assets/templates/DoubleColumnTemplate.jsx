@@ -127,7 +127,7 @@ const DoubleColumnTemplate = ({ data, accentColor }) => {
 												{p.name}
 											</h3>
 										</div>
-										<div className="flex items-center gap-3 mb-1 text-xs">
+										<div className="flex items-center gap-3 mb-1 text-xs font-bold">
 											{p.github_link && (
 												<a
 													href={p.github_link}

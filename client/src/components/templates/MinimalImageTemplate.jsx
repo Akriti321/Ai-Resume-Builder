@@ -180,7 +180,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                                     <div key={index}>
                                         <div className="flex flex-wrap items-center justify-between gap-3">
                                             <h3 className="text-md font-medium text-zinc-800 mt-2">{project.name}</h3>
-                                            <div className="flex items-center gap-3 text-xs text-black">
+                                            <div className="flex items-center gap-3 text-xs text-black font-medium">
                                                 {project.github_link && (
                                                     <a href={project.github_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:underline" aria-label="GitHub">
                                                         <FaGithub className="w-4 h-4" />

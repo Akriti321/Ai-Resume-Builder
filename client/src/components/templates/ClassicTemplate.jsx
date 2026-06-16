@@ -192,7 +192,7 @@ return (
                                 <h3 className="font-semibold text-gray-900">
                                     {proj.name}
                                 </h3>
-                                <div className="flex items-center gap-3 text-xs text-black">
+                                <div className="flex items-center gap-3 text-xs text-black font-semibold">
                                     {proj.github_link && (
                                         <a href={proj.github_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:underline" aria-label="GitHub">
                                             <FaGithub className="w-4 h-4" />

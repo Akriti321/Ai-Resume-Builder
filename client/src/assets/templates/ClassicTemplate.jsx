@@ -104,7 +104,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
                             <div key={index} className="flex justify-between items-start border-l-3 border-gray-300 pl-6">
                                 <div>
                                     <li className="font-semibold text-gray-800 ">{proj.name}</li>
-                                    <div className="flex items-center gap-3 text-xs text-black mt-1">
+                                    <div className="flex items-center gap-3 text-xs text-black font-semibold mt-1">
                                         {proj.github_link && (
                                             <a href={proj.github_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:underline" aria-label="GitHub">
                                                 <Github className="w-4 h-4" />
@@ -118,7 +118,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
                                             </a>
                                         )}
                                     </div>
-                                    <div className="flex items-center gap-3 text-xs text-black mt-1">
+                                    <div className="flex items-center gap-3 text-xs text-black font-semibold mt-1">
                                         {proj.github_link && (
                                             <a href={proj.github_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:underline" aria-label="GitHub">
                                                 <Github className="w-4 h-4" />
