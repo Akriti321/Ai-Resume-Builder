@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, Linkedin, Globe } from "lucide-react";
+import { Mail, Phone, MapPin, Linkedin, Globe, Github } from "lucide-react";
 
 const ClassicTemplate = ({ data, accentColor }) => {
     const formatDate = (dateStr) => {
@@ -104,6 +104,34 @@ const ClassicTemplate = ({ data, accentColor }) => {
                             <div key={index} className="flex justify-between items-start border-l-3 border-gray-300 pl-6">
                                 <div>
                                     <li className="font-semibold text-gray-800 ">{proj.name}</li>
+                                    <div className="flex items-center gap-3 text-xs text-blue-600 mt-1">
+                                        {proj.github_link && (
+                                            <a href={proj.github_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:underline" aria-label="GitHub">
+                                                <Github className="w-4 h-4" />
+                                                <span>GitHub</span>
+                                            </a>
+                                        )}
+                                        {proj.deployment_link && (
+                                            <a href={proj.deployment_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:underline" aria-label="Live Site">
+                                                <Globe className="w-4 h-4" />
+                                                <span>Live</span>
+                                            </a>
+                                        )}
+                                    </div>
+                                    <div className="flex items-center gap-3 text-xs text-blue-600 mt-1">
+                                        {proj.github_link && (
+                                            <a href={proj.github_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:underline" aria-label="GitHub">
+                                                <Github className="w-4 h-4" />
+                                                <span>GitHub</span>
+                                            </a>
+                                        )}
+                                        {proj.deployment_link && (
+                                            <a href={proj.deployment_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:underline" aria-label="Live Site">
+                                                <Globe className="w-4 h-4" />
+                                                <span>Live</span>
+                                            </a>
+                                        )}
+                                    </div>
                                     <p className="text-gray-600">{proj.description}</p>
                                 </div>
                             </div>
@@ -152,6 +180,19 @@ const ClassicTemplate = ({ data, accentColor }) => {
                             </div>
                         ))}
                     </div>
+                </section>
+            )}
+            {/* Achievements */}
+            {data.achievement && data.achievement.length > 0 && (
+                <section className="mb-6">
+                    <h2 className="text-xl font-semibold mb-4" style={{ color: accentColor }}>
+                        ACHIEVEMENTS
+                    </h2>
+                    <ul className="list-disc pl-6 space-y-1 text-gray-700">
+                        {data.achievement.map((a, i) => (
+                            <li key={i}>{a}</li>
+                        ))}
+                    </ul>
                 </section>
             )}
         </div>

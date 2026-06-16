@@ -1,5 +1,5 @@
 import { Mail, Phone, MapPin, Link, Globe } from "lucide-react";
-
+import { FaGithub } from "react-icons/fa";
 const ModernTemplate = ({ data, accentColor }) => {
 	const formatDate = (dateStr) => {
 		if (!dateStr) return "";
@@ -107,14 +107,32 @@ const ModernTemplate = ({ data, accentColor }) => {
 
 
 									<div className="flex justify-between items-start">
-										<div>
+										<div className="flex flex-wrap items-center justify-between gap-3">
 											<h3 className="text-lg font-medium text-gray-900">{p.name}</h3>
+											<div className="flex items-center gap-3 text-xs text-blue-600 mt-2">
+												{p.github_link && (
+													<a href={p.github_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:underline" aria-label="GitHub">
+														<FaGithub className="w-4 h-4" />
+														<span>GitHub</span>
+													</a>
+												)}
+												{p.deployment_link && (
+													<a href={p.deployment_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:underline" aria-label="Live Site">
+														<Globe className="w-4 h-4" />
+														<span>Live</span>
+													</a>
+												)}
+											</div>
 										</div>
 									</div>
 									{p.description && (
-										<div className="text-gray-700 leading-relaxed text-sm mt-3">
-											{p.description}
-										</div>
+										<ul className="list-disc pl-5 mt-3 text-gray-700 text-sm space-y-1">
+											{(Array.isArray(p.description) ? p.description : [p.description])
+												.filter(d => d?.trim())
+												.map((line, idx) => (
+													<li key={idx}>{line}</li>
+												))}
+										</ul>
 									)}
 								</div>
 							))}
@@ -154,17 +172,28 @@ const ModernTemplate = ({ data, accentColor }) => {
 								Skills
 							</h2>
 
-							<div className="flex flex-wrap gap-2">
-								{data.skills.map((skill, index) => (
-									<span
-										key={index}
-										className="px-3 py-1 text-sm text-white rounded-full"
-										style={{ backgroundColor: accentColor }}
-									>
-										{skill}
-									</span>
+							<div className="flex flex-wrap gap-1">
+    {data.skills.map((skill, index) => (
+        <span
+            key={index}
+            className="px-2 py-0.5 text-xs text-black rounded-full"
+        >
+            {skill}
+        </span>
+    ))}
+</div>
+						</section>
+					)}
+
+					{/* Achievements */}
+					{data.achievement && data.achievement.length > 0 && (
+						<section className="sm:col-span-2 mt-4">
+							<h2 className="text-2xl font-light mb-3 pb-1 border-b border-gray-200">Achievements</h2>
+							<ul className="list-disc pl-5 space-y-1">
+								{data.achievement.map((a, i) => (
+									<li key={i} className="text-gray-700">{a}</li>
 								))}
-							</div>
+							</ul>
 						</section>
 					)}
 				</div>

@@ -1,8 +1,10 @@
-import { Briefcase, Plus, Sparkles, Trash, Trash2 } from 'lucide-react'
+import { Briefcase, Plus, Sparkles, Trash2 } from 'lucide-react'
 import React, { useContext, useState } from 'react'
 import { AppContext } from '../context/AppContext'
+import ConfirmationModal from './ConfirmationModal'
 
 const ExperienceForm = ({ data = [], onChange }) => {
+    const [deleteIndex, setDeleteIndex] = useState(null);
     const { enhanceJobDesc } = useContext(AppContext)
     const [enhancingIndex, setEnhancingIndex] = useState(null)
 
@@ -70,7 +72,10 @@ const ExperienceForm = ({ data = [], onChange }) => {
                         <div key={index} className='p-5 border border-gray-200 rounded-xl space-y-4 bg-gray-50/50'>
                             <div className='flex justify-between items-center pb-2 border-b border-gray-100'>
                                 <h4 className='font-medium text-sm text-gray-700'>Experience #{index + 1}</h4>
-                                <button onClick={()=> removeExperience(index)} className='p-1 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-all'>
+                                <button
+                                    onClick={() => setDeleteIndex(index)}
+                                    className='p-1 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-all'
+                                >
                                     <Trash2 className='size-4' />
                                 </button>
                             </div>
@@ -122,6 +127,19 @@ const ExperienceForm = ({ data = [], onChange }) => {
                     ))}
                 </div> 
             )}
+            <ConfirmationModal
+                isOpen={deleteIndex !== null}
+                title="Delete Experience"
+                description="Are you sure you want to permanently delete this experience?"
+                confirmText="Delete"
+                cancelText="Cancel"
+                isDangerous={true}
+                onConfirm={() => {
+                    removeExperience(deleteIndex);
+                    setDeleteIndex(null);
+                }}
+                onCancel={() => setDeleteIndex(null)}
+            />
         </div>
     )
 }

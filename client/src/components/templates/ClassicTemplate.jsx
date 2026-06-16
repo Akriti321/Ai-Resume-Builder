@@ -1,4 +1,5 @@
 import { Mail, Phone, MapPin, Link, Globe } from "lucide-react";
+import { FaGithub } from "react-icons/fa";
 
 const ClassicTemplate = ({ data, accentColor }) => {
 const formatDate = (dateStr) => {
@@ -91,43 +92,39 @@ return (
                 </p>
             </section>
         )}
+        {/* Education */}
+        {data.education && data.education.length > 0 && (
+            <section>
+                <SectionHeading title="Education" />
 
-        {/* Skills */}
-        {data.skills && data.skills.length > 0 && (
-            <section className="mb-4">
-                <SectionHeading title="Technical Skills" />
+                <div className="space-y-2">
 
-                <p className="text-gray-700 leading-6">
-                    {data.skills.join(" • ")}
-                </p>
-            </section>
-        )}
+                    {data.education.map((edu, index) => (
+                        <div
+                            key={index}
+                            className="flex justify-between items-start gap-4"
+                        >
 
-        {/* Projects */}
-        {data.project && data.project.length > 0 && (
-            <section className="mb-4">
-                <SectionHeading title="Projects" />
+                            <div>
+                                <h3 className="font-semibold text-gray-900">
+                                    {edu.degree}
+                                    {edu.field && ` in ${edu.field}`}
+                                </h3>
 
-                <div className="space-y-3">
-
-                    {data.project.map((proj, index) => (
-                        <div key={index}>
-
-                            <h3 className="font-semibold text-gray-900">
-                                {proj.name}
-                            </h3>
-
-                            {proj.type && (
-                                <p className="text-xs text-gray-500 mb-1">
-                                    {proj.type}
+                                <p className="text-gray-700">
+                                    {edu.institution}
                                 </p>
-                            )}
 
-                            {proj.description && (
-                                <p className="text-gray-700 leading-5 mt-1">
-                                    {proj.description}
-                                </p>
-                            )}
+                                {edu.gpa && (
+                                    <p className="text-xs text-gray-500">
+                                        GPA: {edu.gpa}
+                                    </p>
+                                )}
+                            </div>
+
+                            <div className="text-xs text-gray-500 whitespace-nowrap">
+                                {formatDate(edu.graduation_date)}
+                            </div>
 
                         </div>
                     ))}
@@ -135,7 +132,6 @@ return (
                 </div>
             </section>
         )}
-
         {/* Experience */}
         {data.experience && data.experience.length > 0 && (
             <section className="mb-4">
@@ -180,39 +176,55 @@ return (
             </section>
         )}
 
-        {/* Education */}
-        {data.education && data.education.length > 0 && (
-            <section>
-                <SectionHeading title="Education" />
+        
 
-                <div className="space-y-2">
+        {/* Projects */}
+        {data.project && data.project.length > 0 && (
+            <section className="mb-4">
+                <SectionHeading title="Projects" />
 
-                    {data.education.map((edu, index) => (
-                        <div
-                            key={index}
-                            className="flex justify-between items-start gap-4"
-                        >
+                <div className="space-y-3">
 
-                            <div>
+                    {data.project.map((proj, index) => (
+                        <div key={index}>
+
+                            <div className="flex flex-wrap items-center justify-between gap-3">
                                 <h3 className="font-semibold text-gray-900">
-                                    {edu.degree}
-                                    {edu.field && ` in ${edu.field}`}
+                                    {proj.name}
                                 </h3>
-
-                                <p className="text-gray-700">
-                                    {edu.institution}
-                                </p>
-
-                                {edu.gpa && (
-                                    <p className="text-xs text-gray-500">
-                                        GPA: {edu.gpa}
-                                    </p>
-                                )}
+                                <div className="flex items-center gap-3 text-xs text-blue-600">
+                                    {proj.github_link && (
+                                        <a href={proj.github_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:underline" aria-label="GitHub">
+                                            <FaGithub className="w-4 h-4" />
+                                            <span>GitHub</span>
+                                        </a>
+                                    )}
+                                    {proj.deployment_link && (
+                                        <a href={proj.deployment_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:underline" aria-label="Live Site">
+                                            <Globe className="w-4 h-4" />
+                                            <span>Live</span>
+                                        </a>
+                                    )}
+                                </div>
                             </div>
 
-                            <div className="text-xs text-gray-500 whitespace-nowrap">
-                                {formatDate(edu.graduation_date)}
-                            </div>
+                            {(Array.isArray(proj.description)
+                                ? proj.description
+                                : [proj.description || ""])
+                                .filter(point => point.trim() !== "")
+                                .length > 0 && (
+                                <ul className="list-disc pl-5 mt-1 space-y-1">
+                                    {(Array.isArray(proj.description)
+                                        ? proj.description
+                                        : [proj.description || ""])
+                                        .filter(point => point.trim() !== "")
+                                        .map((point, i) => (
+                                            <li key={i} className="text-gray-700">
+                                                {point}
+                                            </li>
+                                        ))}
+                                </ul>
+                            )}
 
                         </div>
                     ))}
@@ -220,6 +232,34 @@ return (
                 </div>
             </section>
         )}
+        {/* Skills */}
+        {data.skills && data.skills.length > 0 && (
+            <section className="mb-4">
+                <SectionHeading title="Technical Skills" />
+
+                <p className="text-gray-700 leading-6">
+                    {data.skills.join(" • ")}
+                </p>
+            </section>
+        )}
+        {/* Achievements */}
+{data.achievement && data.achievement.length > 0 && (
+    <section className="mb-4">
+        <SectionHeading title="Achievements" />
+
+        <ul className="list-disc pl-5 space-y-1">
+            {data.achievement.map((achievement, index) => (
+                <li key={index} className="text-gray-700">
+                    {achievement}
+                </li>
+            ))}
+        </ul>
+    </section>
+)}
+
+        
+
+        
 
     </div>
 );

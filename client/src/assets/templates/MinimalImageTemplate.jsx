@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, Github, Globe } from "lucide-react";
 
 const MinimalImageTemplate = ({ data, accentColor }) => {
     const formatDate = (dateStr) => {
@@ -164,18 +164,42 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                                 {data.project.map((project, index) => (
                                     <div key={index}>
                                         <h3 className="text-md font-medium text-zinc-800 mt-3">{project.name}</h3>
-                                        <p className="text-sm mb-1" style={{ color: accentColor }} >
-                                            {project.type}
-                                        </p>
+                                        <div className="flex items-center gap-3 text-xs text-blue-600 mb-2">
+                                            {project.github_link && (
+                                                <a href={project.github_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:underline" aria-label="GitHub">
+                                                    <Github className="w-4 h-4" />
+                                                    <span>GitHub</span>
+                                                </a>
+                                            )}
+                                            {project.deployment_link && (
+                                                <a href={project.deployment_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:underline" aria-label="Live Site">
+                                                    <Globe className="w-4 h-4" />
+                                                    <span>Live</span>
+                                                </a>
+                                            )}
+                                        </div>
                                         {project.description && (
                                             <ul className="list-disc list-inside text-sm text-zinc-700  space-y-1">
-                                                {project.description.split("\n").map((line, i) => (
+                                                {project.description.map((line, i) => (
                                                     <li key={i}>{line}</li>
                                                 ))}
                                             </ul>
                                         )}
                                     </div>
                                 ))}
+                                    {/* Achievements */}
+                                    {data.achievement && data.achievement.length > 0 && (
+                                        <section className="mb-6">
+                                            <h2 className="text-sm font-semibold tracking-widest text-zinc-600 mb-3">
+                                                ACHIEVEMENTS
+                                            </h2>
+                                            <ul className="list-disc list-inside text-sm text-zinc-700 space-y-1">
+                                                {data.achievement.map((a, i) => (
+                                                    <li key={i}>{a}</li>
+                                                ))}
+                                            </ul>
+                                        </section>
+                                    )}
                             </div>
                         </section>
                     )}

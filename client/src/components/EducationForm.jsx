@@ -1,8 +1,9 @@
-import { GraduationCap, Plus, Trash, Trash2 } from 'lucide-react'
+import { GraduationCap, Plus, Trash2 } from 'lucide-react'
 import React from 'react'
+import ConfirmationModal from './ConfirmationModal'
 
 const EducationForm = ({ data = [], onChange }) => {
-
+    const [deleteIndex, setDeleteIndex] = React.useState(null);
     const addEducation = () => {
         const newEducation = {
             institution: "",
@@ -51,9 +52,12 @@ const EducationForm = ({ data = [], onChange }) => {
                         <div key={index} className='p-5 border border-gray-200 rounded-xl space-y-4 bg-gray-50/50'>
                             <div className='flex justify-between items-center pb-2 border-b border-gray-100'>
                                 <h4 className='font-medium text-sm text-gray-700'>Education #{index + 1}</h4>
-                                <button onClick={()=> removeEducation(index)} className='p-1 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-all'>
-                                    <Trash2 className='size-4' />
-                                </button>
+                                <button
+    onClick={() => setDeleteIndex(index)}
+    className='p-1 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-all'
+>
+    <Trash2 className='size-4' />
+</button>
                             </div>
 
                             <div className='grid md:grid-cols-2 gap-4'>
@@ -82,6 +86,19 @@ const EducationForm = ({ data = [], onChange }) => {
                     ))}
                 </div> 
             )}
+            <ConfirmationModal
+                isOpen={deleteIndex !== null}
+                title="Delete Education"
+                description="Are you sure you want to permanently delete this education entry?"
+                confirmText="Delete"
+                cancelText="Cancel"
+                isDangerous={true}
+                onConfirm={() => {
+                    removeEducation(deleteIndex);
+                    setDeleteIndex(null);
+                }}
+                onCancel={() => setDeleteIndex(null)}
+            />
         </div>
     )
 }

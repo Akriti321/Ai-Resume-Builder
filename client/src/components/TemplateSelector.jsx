@@ -25,6 +25,8 @@ const TemplateSelector = ({ selectedTemplate, onChange }) => {
             name: "Minimal",
             preview: "Ultra-clean design that puts your content front and center"
         },
+        
+    
     ]
   return (
     <div className='relative'>

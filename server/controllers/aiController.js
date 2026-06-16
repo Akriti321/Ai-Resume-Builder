@@ -119,7 +119,7 @@ Only return the text and nothing else.`,
 
 };
 
-// Enhance Project Description
+// Enhance Project Description (with bullet point preservation)
 export const enhanceProjectDescription = async (req, res) => {
   try {
     const { userContent } = req.body;
@@ -132,11 +132,17 @@ export const enhanceProjectDescription = async (req, res) => {
     const response = await callAIWithRetry([
       {
         role: "system",
-        content: `You are an expert in resume writing.
-Your task is to enhance the project description of a resume.
-Make it concise, compelling, technical, and ATS-friendly.
-Rewrite the input into 1-2 high-impact, punchy statements focusing on key technical tasks and results, avoiding excessive detail or over-elaboration.
-Only return the enhanced project description text and nothing else.`,
+        content: `You are an expert in resume writing and ATS optimization.
+Your task is to enhance resume project bullet points while preserving their structure.
+CRITICAL RULES:
+1. Keep the exact same number of bullet points as the input.
+2. Never merge bullet points.
+3. Never create additional bullet points.
+4. Return exactly one enhanced bullet for each input bullet, in the same order.
+5. Make each bullet ATS-friendly, impact-oriented, and concise (under 25 words).
+6. Use strong action verbs and technical language.
+7. Return ONLY the bullet points, one per line, without any numbering or markers (no -, •, *).
+8. Preserve the technical specificity and achievements mentioned in the original bullets.`,
       },
       {
         role: "user",

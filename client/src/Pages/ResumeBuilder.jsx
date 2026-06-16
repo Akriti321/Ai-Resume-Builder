@@ -10,6 +10,7 @@ import ExperienceForm from '../components/ExperienceForm'
 import EducationForm from '../components/EducationForm'
 import ProjectForm from '../components/ProjectForm'
 import SkillsForm from '../components/SkillsForm'
+import AchievementsForm from '../components/AchievementsForm'
 import { AppContext } from '../context/AppContext'
 
 const ResumeBuilder = () => {
@@ -26,6 +27,7 @@ const ResumeBuilder = () => {
         experience: [],
         education: [],
         projects: [],
+        achievement: [],
         skills: [],
         template: "classic",
         accent_color: "#3B82F6",
@@ -59,6 +61,7 @@ const ResumeBuilder = () => {
         { id: "experience", name: "Experience", icon: Briefcase },
         { id: "education", name: "Education", icon: GraduationCap },
         { id: "projects", name: "Projects", icon: FoldersIcon },
+        { id: "achievements", name: "Achievements", icon: Sparkles },
         { id: "skills", name: "Skills", icon: Sparkles },
     ]
 
@@ -169,6 +172,9 @@ const ResumeBuilder = () => {
                             )}
                             {activeSection.id === 'projects' && (
                                 <ProjectForm data={resumeData.project || resumeData.projects || []} onChange={(data)=> setResumeData(prev => ({...prev, project: data, projects: data}))} />
+                            )}
+                            {activeSection.id === 'achievements' && (
+                                <AchievementsForm data={resumeData.achievement || []} onChange={(data)=> setResumeData(prev => ({...prev, achievement: data}))} />
                             )}
                             {activeSection.id === 'skills' && (
                                 <SkillsForm data={resumeData.skills || []} onChange={(data)=> setResumeData(prev => ({...prev, skills: data}))} />

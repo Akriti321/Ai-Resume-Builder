@@ -1,8 +1,10 @@
 import { Plus, Sparkles, X } from 'lucide-react'
 import React, { useState } from 'react'
+import ConfirmationModal from './ConfirmationModal'
 
 const SkillsForm = ({ data = [], onChange }) => {
     const [newSkill, setNewSkill] = useState("")
+    const [skillToDelete, setSkillToDelete] = useState(null)
 
     const addSkill = (skillToAdd) => {
         const trimmed = (skillToAdd || newSkill).trim();
@@ -15,6 +17,7 @@ const SkillsForm = ({ data = [], onChange }) => {
     const removeSkill = (skillToRemove) => {
         const updated = data.filter(skill => skill !== skillToRemove);
         onChange(updated);
+        setSkillToDelete(null);
     }
 
     const handleKeyPress = (e) => {
@@ -72,7 +75,7 @@ const SkillsForm = ({ data = [], onChange }) => {
                             >
                                 {skill}
                                 <button 
-                                    onClick={() => removeSkill(skill)} 
+                                    onClick={() => setSkillToDelete(skill)} 
                                     className='text-blue-400 hover:text-blue-600 rounded-full focus:outline-none transition-colors'
                                 >
                                     <X className='size-3.5' />
@@ -109,7 +112,16 @@ const SkillsForm = ({ data = [], onChange }) => {
                     })}
                 </div>
             </div>
-        </div>
+            <ConfirmationModal
+                isOpen={skillToDelete !== null}
+                title="Remove Skill"
+                description={`Are you sure you want to remove "${skillToDelete}" from your skills?`}
+                confirmText="Remove"
+                cancelText="Cancel"
+                isDangerous={true}
+                onConfirm={() => removeSkill(skillToDelete)}
+                onCancel={() => setSkillToDelete(null)}
+            />        </div>
     )
 }
 

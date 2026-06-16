@@ -1,4 +1,6 @@
 
+import { Github, Globe } from "lucide-react";
+
 const MinimalTemplate = ({ data, accentColor }) => {
     const formatDate = (dateStr) => {
         if (!dateStr) return "";
@@ -121,6 +123,19 @@ const MinimalTemplate = ({ data, accentColor }) => {
                     <div className="text-gray-700">
                         {data.skills.join(" • ")}
                     </div>
+                </section>
+            )}
+            {/* Achievements */}
+            {data.achievement && data.achievement.length > 0 && (
+                <section className="mt-8">
+                    <h2 className="text-sm uppercase tracking-widest mb-6 font-medium" style={{ color: accentColor }}>
+                        Achievements
+                    </h2>
+                    <ul className="list-disc pl-6 space-y-1 text-gray-700">
+                        {data.achievement.map((a, i) => (
+                            <li key={i}>{a}</li>
+                        ))}
+                    </ul>
                 </section>
             )}
         </div>

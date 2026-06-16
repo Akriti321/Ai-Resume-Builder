@@ -31,6 +31,11 @@ const ResumeSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    achievement: [
+        {
+            type: String
+        }
+    ],
 
     skills: [
         {
@@ -114,12 +119,19 @@ const ResumeSchema = new mongoose.Schema({
             type: String
         },
 
-        type: {
-            type: String
+        github_link: {
+            type: String,
+            default: ""
+        },
+
+        deployment_link: {
+            type: String,
+            default: ""
         },
 
         description: {
-            type: String
+            type: [String],
+            default: [""]
         }
     }
 ],

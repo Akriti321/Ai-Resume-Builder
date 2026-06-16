@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, Linkedin, Globe } from "lucide-react";
+import { Mail, Phone, MapPin, Linkedin, Globe, Github } from "lucide-react";
 
 const ModernTemplate = ({ data, accentColor }) => {
 	const formatDate = (dateStr) => {
@@ -106,9 +106,21 @@ const ModernTemplate = ({ data, accentColor }) => {
 								<div key={index} className="relative pl-6 border-l border-gray-200" style={{borderLeftColor: accentColor}}>
 
 
-									<div className="flex justify-between items-start">
-										<div>
-											<h3 className="text-lg font-medium text-gray-900">{p.name}</h3>
+									<div className="flex flex-wrap items-center justify-between gap-3">
+										<h3 className="text-lg font-medium text-gray-900">{p.name}</h3>
+										<div className="flex items-center gap-3 text-xs text-blue-600 mt-2">
+											{p.github_link && (
+												<a href={p.github_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:underline" aria-label="GitHub">
+													<Github className="w-4 h-4" />
+													<span>GitHub</span>
+												</a>
+											)}
+											{p.deployment_link && (
+												<a href={p.deployment_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:underline" aria-label="Live Site">
+													<Globe className="w-4 h-4" />
+													<span>Live</span>
+												</a>
+											)}
 										</div>
 									</div>
 									{p.description && (

@@ -1,4 +1,5 @@
-
+import { Mail, Phone, MapPin, Link, Globe } from "lucide-react";
+import { FaGithub } from "react-icons/fa";
 const MinimalTemplate = ({ data, accentColor }) => {
     const formatDate = (dateStr) => {
         if (!dateStr) return "";
@@ -76,9 +77,33 @@ const MinimalTemplate = ({ data, accentColor }) => {
 
                     <div className="space-y-3">
                         {data.project.map((proj, index) => (
-                            <div key={index} className="flex flex-col gap-2 justify-between items-baseline">
-                                <h3 className="text-lg font-medium ">{proj.name}</h3>
-                                <p className="text-gray-600">{proj.description}</p>
+                            <div key={index} className="space-y-2">
+                                <div className="flex flex-wrap items-center justify-between gap-3">
+                                    <h3 className="text-lg font-medium">{proj.name}</h3>
+                                    <div className="flex items-center gap-3 text-xs text-blue-600">
+                                        {proj.github_link && (
+                                            <a href={proj.github_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:underline" aria-label="GitHub">
+                                                 <FaGithub className="w-4 h-4" />
+                                                <span>GitHub</span>
+                                            </a>
+                                        )}
+                                        {proj.deployment_link && (
+                                            <a href={proj.deployment_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:underline" aria-label="Live Site">
+                                                <Globe className="w-4 h-4" />
+                                                <span>Live</span>
+                                            </a>
+                                        )}
+                                    </div>
+                                </div>
+                                {proj.description && (
+                                    <ul className="list-disc pl-5 text-gray-700">
+                                        {(Array.isArray(proj.description) ? proj.description : [proj.description])
+                                            .filter(d => d?.trim())
+                                            .map((line, i) => (
+                                                <li key={i}>{line}</li>
+                                            ))}
+                                    </ul>
+                                )}
                             </div>
                         ))}
                     </div>
@@ -121,6 +146,19 @@ const MinimalTemplate = ({ data, accentColor }) => {
                     <div className="text-gray-700">
                         {data.skills.join(" • ")}
                     </div>
+                </section>
+            )}
+            {/* Achievements */}
+            {data.achievement && data.achievement.length > 0 && (
+                <section className="mt-6">
+                    <h2 className="text-sm uppercase tracking-widest mb-3 font-medium" style={{ color: accentColor }}>
+                        Achievements
+                    </h2>
+                    <ul className="list-disc pl-5 space-y-1 text-gray-700">
+                        {data.achievement.map((a, i) => (
+                            <li key={i}>{a}</li>
+                        ))}
+                    </ul>
                 </section>
             )}
         </div>
