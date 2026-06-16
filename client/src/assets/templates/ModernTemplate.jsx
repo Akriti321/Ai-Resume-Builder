@@ -108,7 +108,7 @@ const ModernTemplate = ({ data, accentColor }) => {
 
 									<div className="flex flex-wrap items-center justify-between gap-3">
 										<h3 className="text-lg font-medium text-gray-900">{p.name}</h3>
-										<div className="flex items-center gap-3 text-xs text-blue-600 mt-2">
+										<div className="flex items-center gap-3 text-xs text-black mt-2">
 											{p.github_link && (
 												<a href={p.github_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:underline" aria-label="GitHub">
 													<Github className="w-4 h-4" />

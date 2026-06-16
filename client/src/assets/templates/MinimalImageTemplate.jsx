@@ -164,7 +164,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                                 {data.project.map((project, index) => (
                                     <div key={index}>
                                         <h3 className="text-md font-medium text-zinc-800 mt-3">{project.name}</h3>
-                                        <div className="flex items-center gap-3 text-xs text-blue-600 mb-2">
+                                        <div className="flex items-center gap-3 text-xs text-black mb-2">
                                             {project.github_link && (
                                                 <a href={project.github_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:underline" aria-label="GitHub">
                                                     <Github className="w-4 h-4" />

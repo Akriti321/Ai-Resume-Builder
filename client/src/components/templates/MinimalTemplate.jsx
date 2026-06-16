@@ -80,7 +80,7 @@ const MinimalTemplate = ({ data, accentColor }) => {
                             <div key={index} className="space-y-2">
                                 <div className="flex flex-wrap items-center justify-between gap-3">
                                     <h3 className="text-lg font-medium">{proj.name}</h3>
-                                    <div className="flex items-center gap-3 text-xs text-blue-600">
+                                    <div className="flex items-center gap-3 text-xs text-black">
                                         {proj.github_link && (
                                             <a href={proj.github_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:underline" aria-label="GitHub">
                                                  <FaGithub className="w-4 h-4" />
