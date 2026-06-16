@@ -133,7 +133,7 @@ const DoubleColumnTemplate = ({ data, accentColor }) => {
 													href={p.github_link}
 													target="_blank"
 													rel="noreferrer"
-													className="inline-flex items-center gap-1 hover:underline"
+													className="inline-flex items-center gap-1 transition-all duration-200 hover:-translate-y-0.5 hover:opacity-70"
 													style={{ color: accentColor }}
 												>
 													<FaGithub className="w-3 h-3" />
@@ -145,7 +145,7 @@ const DoubleColumnTemplate = ({ data, accentColor }) => {
 													href={p.deployment_link}
 													target="_blank"
 													rel="noreferrer"
-													className="inline-flex items-center gap-1 hover:underline"
+													className="inline-flex items-center gap-1 transition-all duration-200 hover:-translate-y-0.5 hover:opacity-70"
 													style={{ color: accentColor }}
 												>
 													<Globe className="w-3 h-3" />

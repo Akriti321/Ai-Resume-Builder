@@ -106,13 +106,13 @@ const ClassicTemplate = ({ data, accentColor }) => {
                                     <li className="font-semibold text-gray-800 ">{proj.name}</li>
                                     <div className="flex items-center gap-3 text-xs text-black font-semibold mt-1">
                                         {proj.github_link && (
-                                            <a href={proj.github_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:underline" aria-label="GitHub">
+                                            <a href={proj.github_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 transition-all duration-200 hover:-translate-y-0.5 hover:opacity-70" aria-label="GitHub">
                                                 <Github className="w-4 h-4" />
                                                 <span>GitHub</span>
                                             </a>
                                         )}
                                         {proj.deployment_link && (
-                                            <a href={proj.deployment_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:underline" aria-label="Live Site">
+                                            <a href={proj.deployment_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 transition-all duration-200 hover:-translate-y-0.5 hover:opacity-70" aria-label="Live Site">
                                                 <Globe className="w-4 h-4" />
                                                 <span>Live</span>
                                             </a>
@@ -120,13 +120,13 @@ const ClassicTemplate = ({ data, accentColor }) => {
                                     </div>
                                     <div className="flex items-center gap-3 text-xs text-black font-semibold mt-1">
                                         {proj.github_link && (
-                                            <a href={proj.github_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:underline" aria-label="GitHub">
+                                            <a href={proj.github_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 transition-all duration-200 hover:-translate-y-0.5 hover:opacity-70" aria-label="GitHub">
                                                 <Github className="w-4 h-4" />
                                                 <span>GitHub</span>
                                             </a>
                                         )}
                                         {proj.deployment_link && (
-                                            <a href={proj.deployment_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:underline" aria-label="Live Site">
+                                            <a href={proj.deployment_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 transition-all duration-200 hover:-translate-y-0.5 hover:opacity-70" aria-label="Live Site">
                                                 <Globe className="w-4 h-4" />
                                                 <span>Live</span>
                                             </a>
