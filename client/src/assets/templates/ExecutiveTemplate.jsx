@@ -11,7 +11,7 @@ const ExecutiveTemplate = ({ data, accentColor }) => {
 		});
 	};
 
-	const SectionHeading = ({ title }) => (
+	const renderSectionHeading = (title) => (
 		<div className="mb-4">
 			<h2 className="text-lg font-semibold text-gray-900 tracking-tight">{title}</h2>
 			<div className="h-0.5 w-16 mt-2" style={{ backgroundColor: accentColor }}></div>
@@ -82,7 +82,7 @@ const ExecutiveTemplate = ({ data, accentColor }) => {
 				{/* Professional Summary */}
 				{data.professional_summary && (
 					<section className="mb-10">
-						<SectionHeading title="Executive Overview" />
+						{renderSectionHeading("Executive Overview")}
 						<p className="text-gray-700 leading-relaxed text-base">
 							{data.professional_summary}
 						</p>
@@ -92,7 +92,7 @@ const ExecutiveTemplate = ({ data, accentColor }) => {
 				{/* Experience */}
 				{data.experience && data.experience.length > 0 && (
 					<section className="mb-10">
-						<SectionHeading title="Professional Experience" />
+						{renderSectionHeading("Professional Experience")}
 						<div className="space-y-7">
 							{data.experience.map((exp, index) => (
 								<div key={index} className="border-l-4 pl-5" style={{ borderColor: accentColor }}>
@@ -122,7 +122,7 @@ const ExecutiveTemplate = ({ data, accentColor }) => {
 				{/* Projects */}
 				{data.project && data.project.length > 0 && (
 					<section className="mb-10">
-						<SectionHeading title="Key Projects" />
+						{renderSectionHeading("Key Projects")}
 						<div className="space-y-7">
 							{data.project.map((p, index) => (
 								<div key={index} className="border-l-4 pl-5" style={{ borderColor: accentColor }}>
@@ -176,7 +176,7 @@ const ExecutiveTemplate = ({ data, accentColor }) => {
 					{/* Education */}
 					{data.education && data.education.length > 0 && (
 						<section>
-							<SectionHeading title="Education" />
+							{renderSectionHeading("Education")}
 							<div className="space-y-5">
 								{data.education.map((edu, index) => (
 									<div key={index}>
@@ -203,7 +203,7 @@ const ExecutiveTemplate = ({ data, accentColor }) => {
 					{/* Skills */}
 					{data.skills && data.skills.length > 0 && (
 						<section>
-							<SectionHeading title="Core Competencies" />
+							{renderSectionHeading("Core Competencies")}
 							<div className="flex flex-wrap gap-2">
 								{data.skills.map((skill, index) => (
 									<span
@@ -221,7 +221,7 @@ const ExecutiveTemplate = ({ data, accentColor }) => {
 					{/* Achievements */}
 					{data.achievement && data.achievement.length > 0 && (
 						<section className="sm:col-span-2">
-							<SectionHeading title="Recognition & Achievements" />
+							{renderSectionHeading("Recognition & Achievements")}
 							<ul className="space-y-2">
 								{data.achievement.map((a, i) => (
 									<li key={i} className="flex items-start gap-3 text-gray-700">

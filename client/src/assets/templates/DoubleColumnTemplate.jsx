@@ -11,7 +11,7 @@ const DoubleColumnTemplate = ({ data, accentColor }) => {
 		});
 	};
 
-	const SidebarSection = ({ title, children }) => (
+	const renderSidebarSection = (title, children) => (
 		<div className="mb-5">
 			<h3
 				className="text-xs font-bold uppercase tracking-widest mb-2 pb-1"
@@ -23,7 +23,7 @@ const DoubleColumnTemplate = ({ data, accentColor }) => {
 		</div>
 	);
 
-	const MainSection = ({ title }) => (
+	const renderMainSection = (title) => (
 		<h2
 			className="text-xs font-bold uppercase tracking-widest mb-3"
 			style={{ color: accentColor }}
@@ -78,7 +78,7 @@ const DoubleColumnTemplate = ({ data, accentColor }) => {
 					{/* Professional Summary */}
 					{data.professional_summary && (
 						<section>
-							<MainSection title="Summary" />
+							{renderMainSection("Summary")}
 							<p className="text-xs text-gray-700 leading-relaxed">
 								{data.professional_summary}
 							</p>
@@ -88,7 +88,7 @@ const DoubleColumnTemplate = ({ data, accentColor }) => {
 					{/* Experience */}
 					{data.experience && data.experience.length > 0 && (
 						<section>
-							<MainSection title="Experience" />
+							{renderMainSection("Experience")}
 							<div className="space-y-4">
 								{data.experience.map((exp, index) => (
 									<div key={index}>
@@ -118,7 +118,7 @@ const DoubleColumnTemplate = ({ data, accentColor }) => {
 					{/* Projects */}
 					{data.project && data.project.length > 0 && (
 						<section>
-							<MainSection title="Projects" />
+							{renderMainSection("Projects")}
 							<div className="space-y-4">
 								{data.project.map((p, index) => (
 									<div key={index}>
@@ -173,8 +173,8 @@ const DoubleColumnTemplate = ({ data, accentColor }) => {
 				<aside className="space-y-4">
 					{/* Key Achievements */}
 					{data.achievement && data.achievement.length > 0 && (
-						<SidebarSection title="Key Achievements">
-							{data.achievement.map((a, i) => (
+						renderSidebarSection("Key Achievements", (
+							data.achievement.map((a, i) => (
 								<div key={i} className="pb-1.5 border-b border-gray-200">
 									<p className="font-semibold text-gray-800">{a.split("\n")[0]}</p>
 									{a.includes("\n") && (
@@ -183,13 +183,13 @@ const DoubleColumnTemplate = ({ data, accentColor }) => {
 										</p>
 									)}
 								</div>
-							))}
-						</SidebarSection>
+							))
+						))
 					)}
 
 					{/* Skills */}
 					{data.skills && data.skills.length > 0 && (
-						<SidebarSection title="Skills">
+						renderSidebarSection("Skills", (
 							<div className="flex flex-wrap gap-1">
 								{data.skills.map((skill, index) => (
 									<span
@@ -201,13 +201,13 @@ const DoubleColumnTemplate = ({ data, accentColor }) => {
 									</span>
 								))}
 							</div>
-						</SidebarSection>
+						))
 					)}
 
 					{/* Education */}
 					{data.education && data.education.length > 0 && (
-						<SidebarSection title="Education">
-							{data.education.map((edu, index) => (
+						renderSidebarSection("Education", (
+							data.education.map((edu, index) => (
 								<div key={index} className="pb-2 border-b border-gray-200">
 									<div className="font-semibold text-gray-800">
 										{edu.degree}
@@ -217,8 +217,8 @@ const DoubleColumnTemplate = ({ data, accentColor }) => {
 									<div className="text-gray-500">{formatDate(edu.graduation_date)}</div>
 									{edu.gpa && <div className="text-gray-500">GPA: {edu.gpa}</div>}
 								</div>
-							))}
-						</SidebarSection>
+							))
+						))
 					)}
 				</aside>
 			</div>

@@ -13,7 +13,7 @@ if (!dateStr) return "";
     });
 };
 
-const SectionHeading = ({ title }) => (
+const renderSectionHeading = (title) => (
     <div className="border-b border-gray-400 pb-1 mb-2">
         <h2
             className="text-base font-bold uppercase tracking-wide"
@@ -85,7 +85,7 @@ return (
         {/* Summary */}
         {data.professional_summary && (
             <section className="mb-4">
-                <SectionHeading title="Professional Summary" />
+                {renderSectionHeading("Professional Summary")}
 
                 <p className="text-gray-700 leading-6">
                     {data.professional_summary}
@@ -95,7 +95,7 @@ return (
         {/* Education */}
         {data.education && data.education.length > 0 && (
             <section>
-                <SectionHeading title="Education" />
+                {renderSectionHeading("Education")}
 
                 <div className="space-y-2">
 
@@ -135,7 +135,7 @@ return (
         {/* Experience */}
         {data.experience && data.experience.length > 0 && (
             <section className="mb-4">
-                <SectionHeading title="Experience" />
+                {renderSectionHeading("Experience")}
 
                 <div className="space-y-3">
 
@@ -181,7 +181,7 @@ return (
         {/* Projects */}
         {data.project && data.project.length > 0 && (
             <section className="mb-4">
-                <SectionHeading title="Projects" />
+                {renderSectionHeading("Projects")}
 
                 <div className="space-y-3">
 
@@ -235,7 +235,7 @@ return (
         {/* Skills */}
         {data.skills && data.skills.length > 0 && (
             <section className="mb-4">
-                <SectionHeading title="Technical Skills" />
+                {renderSectionHeading("Technical Skills")}
 
                 <p className="text-gray-700 leading-6">
                     {data.skills.join(" • ")}
@@ -245,7 +245,7 @@ return (
         {/* Achievements */}
 {data.achievement && data.achievement.length > 0 && (
     <section className="mb-4">
-        <SectionHeading title="Achievements" />
+        {renderSectionHeading("Achievements")}
 
         <ul className="list-disc pl-5 space-y-1">
             {data.achievement.map((achievement, index) => (
