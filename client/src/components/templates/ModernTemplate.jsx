@@ -124,13 +124,13 @@ const ModernTemplate = ({ data, accentColor }) => {
 											<h3 className="text-lg font-medium text-gray-900">{p.name}</h3>
 											<div className="flex items-center gap-3 text-xs text-black font-medium mt-2">
 												{p.github_link && (
-													<a href={p.github_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 transition-all duration-200 hover:-translate-y-0.5 hover:opacity-70" aria-label="GitHub">
+													<a href={p.github_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1" aria-label="GitHub">
 														<FaGithub className="w-4 h-4" />
 														<span>GitHub</span>
 													</a>
 												)}
 												{p.deployment_link && (
-													<a href={p.deployment_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 transition-all duration-200 hover:-translate-y-0.5 hover:opacity-70" aria-label="Live Site">
+													<a href={p.deployment_link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1" aria-label="Live Site">
 														<Globe className="w-4 h-4" />
 														<span>Live</span>
 													</a>

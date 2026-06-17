@@ -140,7 +140,7 @@ const ExecutiveTemplate = ({ data, accentColor }) => {
 												href={p.github_link}
 												target="_blank"
 												rel="noreferrer"
-												className="inline-flex items-center gap-2 text-xs transition-all duration-200 hover:-translate-y-0.5 hover:opacity-70"
+												className="inline-flex items-center gap-2 text-xs"
 												style={{ color: accentColor }}
 											>
 												<FaGithub className="w-4 h-4" />
@@ -152,7 +152,7 @@ const ExecutiveTemplate = ({ data, accentColor }) => {
 												href={p.deployment_link}
 												target="_blank"
 												rel="noreferrer"
-												className="inline-flex items-center gap-2 text-xs transition-all duration-200 hover:-translate-y-0.5 hover:opacity-70"
+												className="inline-flex items-center gap-2 text-xs"
 												style={{ color: accentColor }}
 											>
 												<Globe className="w-4 h-4" />
