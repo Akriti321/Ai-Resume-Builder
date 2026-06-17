@@ -41,7 +41,11 @@ const DoubleColumnTemplate = ({ data, accentColor }) => {
 				</h1>
 				<div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-600">
 					{data.personal_info?.email && (
-						<span>{data.personal_info.email}</span>
+						<a
+							href={`mailto:${data.personal_info.email}`}
+						>
+							{data.personal_info.email}
+						</a>
 					)}
 					{data.personal_info?.phone && (
 						<span>{data.personal_info.phone}</span>
@@ -53,8 +57,7 @@ const DoubleColumnTemplate = ({ data, accentColor }) => {
 						<a
 							target="_blank"
 							rel="noreferrer"
-							href={data.personal_info?.linkedin}
-							className="hover:underline"
+							href={data.personal_info.linkedin.startsWith('http') ? data.personal_info.linkedin : `https://${data.personal_info.linkedin}`}
 						>
 							LinkedIn
 						</a>
@@ -63,8 +66,7 @@ const DoubleColumnTemplate = ({ data, accentColor }) => {
 						<a
 							target="_blank"
 							rel="noreferrer"
-							href={data.personal_info?.website}
-							className="hover:underline"
+							href={data.personal_info.website.startsWith('http') ? data.personal_info.website : `https://${data.personal_info.website}`}
 						>
 							Website
 						</a>

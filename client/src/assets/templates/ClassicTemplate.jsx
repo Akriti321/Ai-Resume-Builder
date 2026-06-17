@@ -20,10 +20,13 @@ const ClassicTemplate = ({ data, accentColor }) => {
 
                 <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
                     {data.personal_info?.email && (
-                        <div className="flex items-center gap-1">
+                        <a
+                            href={`mailto:${data.personal_info.email}`}
+                            className="flex items-center gap-1"
+                        >
                             <Mail className="size-4" />
                             <span>{data.personal_info.email}</span>
-                        </div>
+                        </a>
                     )}
                     {data.personal_info?.phone && (
                         <div className="flex items-center gap-1">
@@ -38,16 +41,26 @@ const ClassicTemplate = ({ data, accentColor }) => {
                         </div>
                     )}
                     {data.personal_info?.linkedin && (
-                        <div className="flex items-center gap-1">
+                        <a
+                            href={data.personal_info.linkedin.startsWith('http') ? data.personal_info.linkedin : `https://${data.personal_info.linkedin}`}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="flex items-center gap-1"
+                        >
                             <Linkedin className="size-4" />
                             <span className="break-all">{data.personal_info.linkedin}</span>
-                        </div>
+                        </a>
                     )}
                     {data.personal_info?.website && (
-                        <div className="flex items-center gap-1">
+                        <a
+                            href={data.personal_info.website.startsWith('http') ? data.personal_info.website : `https://${data.personal_info.website}`}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="flex items-center gap-1"
+                        >
                             <Globe className="size-4" />
                             <span className="break-all">{data.personal_info.website}</span>
-                        </div>
+                        </a>
                     )}
                 </div>
             </header>

@@ -28,10 +28,13 @@ const ExecutiveTemplate = ({ data, accentColor }) => {
 
 				<div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm mt-6 max-w-2xl">
 					{data.personal_info?.email && (
-						<div className="flex items-center gap-3">
+						<a
+							href={`mailto:${data.personal_info.email}`}
+							className="flex items-center gap-3"
+						>
 							<Mail className="size-4 opacity-75 flex-shrink-0" />
 							<span className="break-all">{data.personal_info.email}</span>
-						</div>
+						</a>
 					)}
 					{data.personal_info?.phone && (
 						<div className="flex items-center gap-3">
@@ -49,8 +52,8 @@ const ExecutiveTemplate = ({ data, accentColor }) => {
 						<a
 							target="_blank"
 							rel="noreferrer"
-							href={data.personal_info?.linkedin}
-							className="flex items-center gap-3 hover:opacity-80 transition"
+							href={data.personal_info.linkedin.startsWith('http') ? data.personal_info.linkedin : `https://${data.personal_info.linkedin}`}
+							className="flex items-center gap-3"
 						>
 							<Link className="size-4 opacity-75 flex-shrink-0" />
 							<span className="break-all text-xs">
@@ -64,8 +67,8 @@ const ExecutiveTemplate = ({ data, accentColor }) => {
 						<a
 							target="_blank"
 							rel="noreferrer"
-							href={data.personal_info?.website}
-							className="flex items-center gap-3 hover:opacity-80 transition"
+							href={data.personal_info.website.startsWith('http') ? data.personal_info.website : `https://${data.personal_info.website}`}
+							className="flex items-center gap-3"
 						>
 							<Globe className="size-4 opacity-75 flex-shrink-0" />
 							<span className="break-all text-xs">

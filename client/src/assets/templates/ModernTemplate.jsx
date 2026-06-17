@@ -20,10 +20,13 @@ const ModernTemplate = ({ data, accentColor }) => {
 
 				<div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm ">
 					{data.personal_info?.email && (
-						<div className="flex items-center gap-2">
+						<a
+							href={`mailto:${data.personal_info.email}`}
+							className="flex items-center gap-2"
+						>
 							<Mail className="size-4" />
 							<span>{data.personal_info.email}</span>
-						</div>
+						</a>
 					)}
 					{data.personal_info?.phone && (
 						<div className="flex items-center gap-2">
@@ -38,18 +41,27 @@ const ModernTemplate = ({ data, accentColor }) => {
 						</div>
 					)}
 					{data.personal_info?.linkedin && (
-						<a target="_blank" href={data.personal_info?.linkedin} className="flex items-center gap-2">
+						<a
+							target="_blank"
+							rel="noreferrer"
+							href={data.personal_info.linkedin.startsWith('http') ? data.personal_info.linkedin : `https://${data.personal_info.linkedin}`}
+							className="flex items-center gap-2"
+						>
 							<Linkedin className="size-4" />
 							<span className="break-all text-xs">{data.personal_info.linkedin.split("https://www.")[1] ? data.personal_info.linkedin.split("https://www.")[1] : data.personal_info.linkedin}</span>
 						</a>
 					)}
 					{data.personal_info?.website && (
-						<a target="_blank" href={data.personal_info?.website} className="flex items-center gap-2">
+						<a
+							target="_blank"
+							rel="noreferrer"
+							href={data.personal_info.website.startsWith('http') ? data.personal_info.website : `https://${data.personal_info.website}`}
+							className="flex items-center gap-2"
+						>
 							<Globe className="size-4" />
 							<span className="break-all text-xs">{data.personal_info.website.split("https://")[1] ? data.personal_info.website.split("https://")[1] : data.personal_info.website}</span>
 						</a>
 					)}
-				</div>
 			</header>
 
 			<div className="p-8">

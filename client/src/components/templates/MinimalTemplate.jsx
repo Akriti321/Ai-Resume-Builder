@@ -19,14 +19,34 @@ const MinimalTemplate = ({ data, accentColor }) => {
                 </h1>
 
                 <div className="flex flex-wrap gap-3 text-sm text-gray-600">
-                    {data.personal_info?.email && <span>{data.personal_info.email}</span>}
+                    {data.personal_info?.email && (
+                        <a
+                            href={`mailto:${data.personal_info.email}`}
+                        >
+                            {data.personal_info.email}
+                        </a>
+                    )}
                     {data.personal_info?.phone && <span>{data.personal_info.phone}</span>}
                     {data.personal_info?.location && <span>{data.personal_info.location}</span>}
                     {data.personal_info?.linkedin && (
-                        <span className="break-all">{data.personal_info.linkedin}</span>
+                        <a
+                            href={data.personal_info.linkedin.startsWith('http') ? data.personal_info.linkedin : `https://${data.personal_info.linkedin}`}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="break-all"
+                        >
+                            {data.personal_info.linkedin}
+                        </a>
                     )}
                     {data.personal_info?.website && (
-                        <span className="break-all">{data.personal_info.website}</span>
+                        <a
+                            href={data.personal_info.website.startsWith('http') ? data.personal_info.website : `https://${data.personal_info.website}`}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="break-all"
+                        >
+                            {data.personal_info.website}
+                        </a>
                     )}
                 </div>
             </header>

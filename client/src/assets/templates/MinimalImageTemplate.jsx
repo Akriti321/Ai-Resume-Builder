@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, Github, Globe } from "lucide-react";
+import { Mail, Phone, MapPin, Github, Globe, Link } from "lucide-react";
 
 const MinimalImageTemplate = ({ data, accentColor }) => {
     const formatDate = (dateStr) => {
@@ -56,16 +56,41 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                                 </div>
                             )}
                             {data.personal_info?.email && (
-                                <div className="flex items-center gap-2">
+                                <a
+                                    href={`mailto:${data.personal_info.email}`}
+                                    className="flex items-center gap-2"
+                                >
                                     <Mail size={14} style={{ color: accentColor }} />
                                     <span>{data.personal_info.email}</span>
-                                </div>
+                                </a>
                             )}
                             {data.personal_info?.location && (
                                 <div className="flex items-center gap-2">
                                     <MapPin size={14} style={{ color: accentColor }} />
                                     <span>{data.personal_info.location}</span>
                                 </div>
+                            )}
+                            {data.personal_info?.linkedin && (
+                                <a
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    href={data.personal_info.linkedin.startsWith('http') ? data.personal_info.linkedin : `https://${data.personal_info.linkedin}`}
+                                    className="flex items-center gap-2"
+                                >
+                                    <Link size={14} style={{ color: accentColor }} />
+                                    <span className="break-all text-xs">{data.personal_info.linkedin.split("https://www.")[1] ? data.personal_info.linkedin.split("https://www.")[1] : data.personal_info.linkedin}</span>
+                                </a>
+                            )}
+                            {data.personal_info?.website && (
+                                <a
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    href={data.personal_info.website.startsWith('http') ? data.personal_info.website : `https://${data.personal_info.website}`}
+                                    className="flex items-center gap-2"
+                                >
+                                    <Globe size={14} style={{ color: accentColor }} />
+                                    <span className="break-all text-xs">{data.personal_info.website.split("https://")[1] ? data.personal_info.website.split("https://")[1] : data.personal_info.website}</span>
+                                </a>
                             )}
                         </div>
                     </section>
